@@ -1,0 +1,133 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model About {
+  id           String   @id @default(uuid())
+  title        String   @default("Full Stack Developer")
+  subtitle     String?
+  bio          String
+  secondaryBio String?
+  avatarUrl    String?
+  resumeUrl    String?
+  location     String?
+  email        String?
+  phone        String?
+  githubUrl    String?
+  linkedinUrl  String?
+  twitterUrl   String?
+  updatedAt    DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(uuid())
+  name      String
+  category  String   // Frontend, Backend, Tools, etc.
+  level     Int      @default(85)
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  summary     String
+  description String?
+  imageUrl    String?
+  liveUrl     String?
+  githubUrl   String?
+  tags        String   // comma-separated tags e.g. "React, Node.js, Tailwind"
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Blog {
+  id          String    @id @default(uuid())
+  title       String
+  slug        String    @unique
+  summary     String
+  content     String
+  coverImage  String?
+  tags        String    // comma-separated tags
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  role        String
+  company     String
+  location    String?
+  startDate   String
+  endDate     String?
+  isCurrent   Boolean  @default(false)
+  description String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  company   String?
+  avatarUrl String?
+  content   String
+  rating    Int      @default(5)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  fileName     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  createdAt    DateTime @default(now())
+}
